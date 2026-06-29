@@ -1,0 +1,23 @@
+[
+    {
+        "name": "umer",
+        "rollno": 21,
+        "department": "se",
+        "session": "2024-2028",
+        "age": 22
+    },
+    {
+        "name": "ahmad",
+        "rollno": 22,
+        "department": "se",
+        "session": "2024-2028",
+        "age": 20
+    },
+    {
+        "name": "fatima",
+        "rollno": 31,
+        "department": "IT",
+        "session": "2020-2024",
+        "age": 25
+    }
+]

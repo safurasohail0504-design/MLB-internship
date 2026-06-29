@@ -1,0 +1,2 @@
+this is my first time writing in file with python
+I have done writing,reading from file
