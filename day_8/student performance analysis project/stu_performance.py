@@ -1,0 +1,15 @@
+import pandas as pd
+df=pd.read_csv("student_performance.csv")
+print("basic information about the dataset:")
+print(df.info())
+print("average marks for each subject:")
+print(df[["Python","Mathematics","Statistics","Machine_Learning"]].mean())
+df["total_marks"]=df["Python"]+df["Mathematics"] +df["Statistics"] +df["Machine_Learning"]
+df = df.sort_values(by="total_marks", ascending=False)
+print("top 5 performing students:")
+print(df.head(5))
+average=df["total_marks"].mean()
+print(average)
+print("students scoring below the average:")
+print(df[df["total_marks"]<average])
+df.to_csv("student_performance_analysis.csv",index=False)

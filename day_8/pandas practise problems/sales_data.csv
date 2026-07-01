@@ -1,0 +1,11 @@
+order_id,customer_name,product,category,quantity,unit_price,total_amount,region,date
+1001,Ahmed Khan,Laptop,Electronics,1,75000,75000,Lahore,2024-01-05
+1002,Sara Ali,Mouse,Electronics,3,,1500,Karachi,2024-01-08
+1003,Usman Raza,Desk Chair,Furniture,2,12000,24000,Islamabad,2024-01-11
+1004,Fatima Noor,Notebook,Stationery,10,150,1500,,2024-01-13
+1005,Bilal Ahmed,Monitor,Electronics,1,30000,30000,Lahore,2024-01-15
+1006,,Keyboard,Electronics,2,2500,5000,Karachi,2024-01-18
+1007,Hina Malik,Bookshelf,Furniture,1,18000,18000,Islamabad,2024-01-20
+1008,Zara Sheikh,Pen Set,Stationery,5,500,,Lahore,2024-01-22
+1009,Kamran Ali,Headphones,Electronics,2,8000,16000,Karachi,2024-01-25
+1010,Nadia Iqbal,Office Table,Furniture,1,25000,25000,Islamabad,2024-01-28

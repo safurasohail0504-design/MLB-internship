@@ -1,0 +1,10 @@
+import numpy as np
+a=np.array([50,40,60])
+b=np.array([30,20,40])
+print(a+b)
+print(a-b)
+print(a*b)
+print(a/b)
+print(a+2)
+print(b+5)
+print(a*2)
