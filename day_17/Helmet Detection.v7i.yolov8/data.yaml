@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['0', '1']
+
+roboflow:
+  workspace: helmet-detection-sutvo
+  project: helmet-detection-j7vt9
+  version: 7
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/helmet-detection-sutvo/helmet-detection-j7vt9/dataset/7
