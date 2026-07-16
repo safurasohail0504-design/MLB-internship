@@ -1,0 +1,51 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+df=pd.read_csv("cleaned student performance/cleaned_student_performance.csv")
+
+print("total students:")
+print(len(df))
+
+print("\n average marks of each subject:")
+subj=["Python","Mathematics","Statistics","Machine_Learning"]
+average=df[subj].mean()
+print(average)
+plt.bar(subj,average)
+plt.title("average marks of each subject")
+plt.savefig("subject_average.png")
+plt.show()
+
+print("\n Top 5 performing students:")
+top5=df.sort_values(by="Average_Score",ascending=False).head(5)
+print(top5[["Name","Average_Score"]])
+plt.figure(figsize=(8,5))
+plt.bar(top5["Name"],top5["Average_Score"])
+plt.title("Top 5 Students")
+plt.xticks(rotation=45)
+plt.xticks(fontsize=8)
+plt.tight_layout()
+plt.savefig("top5_students.png")
+plt.show()
+
+print("\nstudents needing improvement:")
+improve=df[df["performance"]=="improve"]
+print(improve[["Name","Average_Score"]])
+plt.figure(figsize=(8,4))
+plt.bar(improve["Name"],improve["Average_Score"])
+plt.title("Students Needing Improvement")
+plt.xticks(rotation=90)
+plt.xticks(fontsize=8)
+plt.tight_layout()
+plt.savefig("needs_improvement.png")
+plt.show()
+
+print("\nsubject With highest class average:")
+print(average.idxmax())
+plt.figure(figsize=(6,4))
+plt.bar(average.index,average.values)
+plt.title("Average Marks of Each Subject :""Highest Average Subject:ML")
+plt.xlabel("subjects")
+plt.ylabel("average marks")
+plt.xticks(rotation=20)
+plt.tight_layout()
+plt.savefig("highest_subject_average.png")
+plt.show()

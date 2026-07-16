@@ -1,0 +1,21 @@
+Student_ID,Name,Age,Program,Python,Mathematics,Statistics,Machine_Learning,Attendance,Average_Score,performance
+S001,Ali Khan,20,AI,85,78,92,88,95,85.75,good
+S002,Sara Ahmed,21,AI,72,75,70,80,90,74.25,average
+S003,Ahmed Raza,22,SE,90,88,91,93,96,90.5,excellent
+S004,Fatima Noor,20,DS,65,70,68,72,85,68.75,improve
+S005,Usman Ali,21,AI,78,82,80,76,88,79.0,average
+S006,Ayesha Malik,22,SE,95,94,96,97,99,95.5,excellent
+S007,Hassan Tariq,20,DS,55,60,58,62,75,58.75,improve
+S008,Zainab Iqbal,21,AI,88,86,90,91,94,88.75,good
+S009,Bilal Ahmed,23,SE,73,77,75,79,82,76.0,average
+S010,Maryam Khan,20,DS,81,84,79,85,91,82.25,good
+S011,Hamza Siddiqui,22,AI,69,71,74,70,87,71.0,average
+S012,Noor Fatima,21,SE,92,90,93,95,98,92.5,excellent
+S013,Talha Javed,20,DS,76,74,78,80,89,77.0,average
+S014,Iqra Aslam,22,AI,84,83,86,88,92,85.25,good
+S015,Danish Ali,23,SE,61,65,63,67,78,64.0,improve
+S016,Hira Shah,21,DS,89,91,88,90,96,89.5,good
+S017,Omar Farooq,20,AI,74,72,76,78,84,75.0,average
+S018,Laiba Khan,22,SE,97,95,98,99,100,97.25,excellent
+S019,Abdullah,21,DS,68,66,70,72,80,69.0,improve
+S020,Mehwish,20,AI,86,89,87,90,93,88.0,good
