@@ -1,0 +1,21 @@
+Student_ID,Name,Age,Python,Mathematics,Statistics,Machine_Learning,Attendance,Average_Score,Program_AI,Program_DS,Program_SE
+S001,Ali Khan,20,85,78,92,88,95,85.75,True,False,False
+S002,Sara Ahmed,21,72,75,70,80,90,74.25,True,False,False
+S003,Ahmed Raza,22,90,88,91,93,96,90.5,False,False,True
+S004,Fatima Noor,20,65,70,68,72,85,68.75,False,True,False
+S005,Usman Ali,21,78,82,80,76,88,79.0,True,False,False
+S006,Ayesha Malik,22,95,94,96,97,99,95.5,False,False,True
+S007,Hassan Tariq,20,55,60,58,62,75,58.75,False,True,False
+S008,Zainab Iqbal,21,88,86,90,91,94,88.75,True,False,False
+S009,Bilal Ahmed,23,73,77,75,79,82,76.0,False,False,True
+S010,Maryam Khan,20,81,84,79,85,91,82.25,False,True,False
+S011,Hamza Siddiqui,22,69,71,74,70,87,71.0,True,False,False
+S012,Noor Fatima,21,92,90,93,95,98,92.5,False,False,True
+S013,Talha Javed,20,76,74,78,80,89,77.0,False,True,False
+S014,Iqra Aslam,22,84,83,86,88,92,85.25,True,False,False
+S015,Danish Ali,23,61,65,63,67,78,64.0,False,False,True
+S016,Hira Shah,21,89,91,88,90,96,89.5,False,True,False
+S017,Omar Farooq,20,74,72,76,78,84,75.0,True,False,False
+S018,Laiba Khan,22,97,95,98,99,100,97.25,False,False,True
+S019,Abdullah,21,68,66,70,72,80,69.0,False,True,False
+S020,Mehwish,20,86,89,87,90,93,88.0,True,False,False
