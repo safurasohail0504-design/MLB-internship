@@ -1,3 +1,3 @@
-gradio
+streamlit
 opencv-python
 numpy

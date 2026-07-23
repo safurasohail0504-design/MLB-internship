@@ -1,18 +1,17 @@
 # Day 23 – Computer Vision Image Processing Studio
 
-## Overview
+## Project Introduction
 
-In this task, I combined multiple Computer Vision techniques into a single interactive application using **OpenCV** and **Gradio**. The application allows users to upload an image, select an image processing operation, instantly view the processed result, and download the output image through a simple web interface.
+This project combines different image processing techniques into one simple application. It is built using **Python**, **OpenCV**, **NumPy**, and **Streamlit**. The application allows users to upload an image, choose a processing operation, preview the result, and download the processed image with a custom file name.
 
-
-## Technologies Used
+## Tools and Libraries
 
 - Python
 - OpenCV
 - NumPy
-- Gradio
+- Streamlit
 
-## Project Structure
+## Folder Structure
 
 Day_23
 │
@@ -28,26 +27,26 @@ Day_23
 │
 ├── app.py
 ├── requirements.txt
-├── README.md
+├── README
 ├── Sample Input Images
-├── Sample Output Images
+└── Sample Output Images
 
-## Coding Practice Completed
+## Features of the Application
 
-The Gradio application allows the user to:
+The application provides the following functionality:
 - Upload an image
 - Select an image processing operation
-- Process the image
-- View the processed result
+- View the processed image instantly
+- Enter a custom output file name
+- Save the processed image
 - Download the processed image
 
 ## Image Processing Operations
 
-The application includes the following operations:
-
+The following operations are available inside the application:
 - Grayscale Conversion
 - Gaussian Blur
-- Edge Detection (Canny)
+- Edge Detection
 - Image Rotation
 - Brightness Adjustment
 - Contour Detection
@@ -58,62 +57,63 @@ The application includes the following operations:
 
 ### Computer Vision Image Processing Studio
 
-The application performs the following tasks:
-- Uploads an image
-- Applies different OpenCV image processing techniques
-- Displays the original and processed images
-- Allows users to download the processed image
-- Provides a simple and user-friendly Gradio interface
+This application combines all the OpenCV techniques learned during previous tasks into one user-friendly interface.
+It performs the following tasks:
+- Reads an uploaded image
+- Processes the image according to the selected operation
+- Displays both original and processed images
+- Saves the processed result
+- Allows downloading the final image
 
 ## Challenge Task
 
-Implemented additional image processing features that were not covered during the coding practice.
-
-### Custom Features
+Two additional features were added to improve the application:
 - Image Flip
 - Thresholding
+These features were implemented as custom additions beyond the basic requirements.
 
-These features make the application more useful and interactive.
+## How the Application Works
 
-## How Gradio Works
+1. The user uploads an image.
+2. An image processing operation is selected from the dropdown menu.
+3. The application processes the image using OpenCV.
+4. The processed image is displayed on the screen.
+5. The user enters a file name.
+6. The image is saved and can also be downloaded.
 
-Gradio is a Python library that creates a web interface directly from Python code.
-Instead of building HTML, CSS, and JavaScript manually, Gradio automatically generates an interactive web application.
-Users simply upload an image, choose an operation, and Gradio sends the image to the Python function, processes it using OpenCV, and displays the output.
+## Techniques Used
 
-## Image Processing Techniques Used
-
-- Grayscale Conversion
-- Gaussian Blur
+The project includes the following Computer Vision techniques:
+- Color to Grayscale Conversion
+- Gaussian Blurring
 - Canny Edge Detection
 - Image Rotation
-- Brightness Adjustment
+- Brightness Enhancement
 - Contour Detection
-- Image Flip
+- Horizontal Image Flipping
 - Binary Thresholding
 
-## Challenges Faced
+## Difficulties Faced
 
-- Understanding how Gradio components communicate with Python functions.
-- Learning to organize multiple image processing operations inside a single application.
-- Handling grayscale and color image outputs correctly.
-- Deploying the application on Hugging Face because the account only allowed Static Spaces while Gradio Spaces required additional permissions.
+During this task, I faced a few challenges:
 
-## Learning Outcome
+- Converting the Gradio application into a Streamlit application.
+- Implementing image saving with a custom file name instead of using a fixed name.
+- Deploying the application because new Hugging Face accounts only supported Static Spaces instead of Gradio Spaces.
 
-After completing this task, I can:
+## What I Learned
 
-- Build an interactive Computer Vision application.
-- Create user interfaces using Gradio.
-- Apply multiple OpenCV image processing techniques.
-- Process uploaded images in real time.
-- Organize Computer Vision projects professionally.
-- Prepare AI applications for deployment on Hugging Face Spaces.
+After completing this task, I learned how to:
+- Build a complete Computer Vision application.
+- Create a graphical interface using Streamlit.
+- Integrate multiple OpenCV operations into one project.
+- Save and download processed images.
+- Organize project files professionally for deployment.
 
 ## Future Improvements
-
-- Add more image processing filters.
-- Support webcam image capture.
-- Allow applying multiple filters together.
-- Improve the interface with additional customization options.
-- Deploy the application publicly on Hugging Face Spaces.
+In future versions, I would like to add:
+- Contrast Adjustment
+- Image Sharpening
+- Multiple filters applied together
+- Crop and Resize options
+- Webcam image processing support
