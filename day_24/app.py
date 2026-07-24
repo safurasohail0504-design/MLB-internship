@@ -23,4 +23,4 @@ if uploaded_file is not None:
             label="Download Text File",
             data=text_bytes,
             file_name=file_name + ".txt",
-            mime="text/plain"
+            mime="text/plain")
