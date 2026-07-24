@@ -3,6 +3,7 @@ easyocr
 opencv-python-headless
 numpy
 matplotlib
-torch
-torchvision
 Pillow
+
+torch==2.8.0
+torchvision==0.23.0
