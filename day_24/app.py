@@ -19,8 +19,4 @@ if uploaded_file is not None:
     st.text_area("", text, height=250)
     if st.button("Save Text File"):
         text_bytes = text.encode("utf-8")
-        st.download_button(
-            label="Download Text File",
-            data=text_bytes,
-            file_name=file_name + ".txt",
-            mime="text/plain")
+        st.download_button(label="Download Text File",data=text_bytes,file_name=file_name + ".txt",mime="text/plain")
