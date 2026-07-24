@@ -18,9 +18,9 @@ if uploaded_file is not None:
     st.subheader("Extracted Text")
     st.text_area("", text, height=250)
     if st.button("Save Text File"):
-        path = "Extracted Text Files/" + file_name + ".txt"
-        with open(path, "w", encoding="utf-8") as file:
-            file.write(text)
-        st.success("Text File Saved Successfully")
-        with open(path, "rb") as file:
-            st.download_button("Download Text File",file,file_name=file_name + ".txt")
+        text_bytes = text.encode("utf-8")
+        st.download_button(
+            label="Download Text File",
+            data=text_bytes,
+            file_name=file_name + ".txt",
+            mime="text/plain"
