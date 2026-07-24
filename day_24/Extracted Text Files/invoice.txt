@@ -1,0 +1,44 @@
+INVOICE
+Borcelle
+Invoice to:
+Invoice#
+52131
+Olivia Wilson
+Date
+28/ 07
+2095
+123 Anywhere St.
+City, ST 12345
+Item
+Quantity
+Unit Price
+Total
+Web Design
+520
+S200
+Brochure Design
+S15
+S75
+Print Design
+S5
+S10
+Subtotal
+S285
+PAYMENT METHOD
+Tax (0%)
+so
+Rimberio Bank
+Account Name: Daniel
+Gallego
+Total
+S285
+Account No:: 0123 4567 8901 2345
+by: 28 July 2095
+Thank you for your business!
+Authorized Signed
+123-456-7890
+123 Anywhere St: ,
+City
+Any
+Pay
+Any
