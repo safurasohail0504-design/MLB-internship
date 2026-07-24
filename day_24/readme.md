@@ -29,7 +29,7 @@ Day_24
 ├── Sample Input Images
 │
 ├── Extracted Text Files
-│
+|__ runtime.txt
 ├── app.py
 ├── requirements.txt
 ├── README.md
