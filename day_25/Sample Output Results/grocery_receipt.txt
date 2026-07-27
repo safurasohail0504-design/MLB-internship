@@ -1,0 +1,36 @@
+Food Station
+61 Lowell Rd, Groton
+MA 01450
++1 978
+448-4848
+23 June 2022
+4.56 PM
+ITEM
+AMOUNT
+Apple Pie
+$5.00
+Hamburgers
+56.99
+Cheesesteak Sandwich
+54.50
+Avocado Toast
+S8.00
+Cornbread
+S5.50
+Sub-Total
+529.99
+Tax
+53.00
+Total
+532.99
+Invoice#
+326598523652
+Payment Type
+Visa Card
+Card Number
+Xxxx2363
+Auth Code
+123456
+Entry Method
+Chip
+Thank Youl
