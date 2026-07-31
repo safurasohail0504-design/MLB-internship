@@ -195,12 +195,11 @@ The Streamlit application performs the following tasks:
 
 # Final Evaluation Metrics
 
-*(Update after training completes.)*
 
-* mAP@50:
-* mAP@50-95:
-* Precision:
-* Recall:
+* mAP@50:0.870
+* mAP@50-95:0.679
+* Precision:0.913
+* Recall:0.817
 
 ---
 
