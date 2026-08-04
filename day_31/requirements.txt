@@ -2,3 +2,7 @@ streamlit
 ultralytics
 opencv-python-headless
 numpy
+pillow
+lapx
+filterpy
+scipy
