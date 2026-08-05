@@ -66,4 +66,9 @@ if uploaded_file:
         writer.release()
         st.video("output.mp4")
         with open("output.mp4","rb") as file:
-            st.download_button("Download Output",file,file_name="people_count.mp4")
+          st.download_button(
+        label="Download Output Video",
+        data=file,
+        file_name="people_count.mp4",
+        mime="video/mp4"
+    )
