@@ -3,6 +3,7 @@ import cv2
 import tempfile
 import csv
 import os
+import shutil
 import zipfile
 import pandas as pd
 from ultralytics import YOLO
@@ -31,7 +32,6 @@ if uploaded_file is not None:
     temp.write(uploaded_file.read())
     temp.close()
     video_path = temp.name
-
     cap = cv2.VideoCapture(video_path)
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -46,15 +46,15 @@ if uploaded_file is not None:
     roi_x2 = st.sidebar.slider("ROI Right", 0, width, width)
     roi_y1 = st.sidebar.slider("ROI Top", 0, height, 0)
     roi_y2 = st.sidebar.slider("ROI Bottom", 0, height, height)
-
     start = st.button("🚀 Start Monitoring")
-
     if start:
         st.session_state.done = False
         cap = cv2.VideoCapture(video_path)
         writer = cv2.VideoWriter("output.mp4", cv2.VideoWriter_fourcc(*"mp4v"), fps, (width, height))
-        if not os.path.exists("snapshots"):
-            os.makedirs("snapshots")
+        # Clear previous snapshots folder before starting new analysis
+        if os.path.exists("snapshots"):
+            shutil.rmtree("snapshots")
+        os.makedirs("snapshots")
 
         csv_file = open("events.csv", "w", newline="")
         csv_writer = csv.writer(csv_file)
