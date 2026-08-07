@@ -6,7 +6,8 @@ import os
 import zipfile
 import pandas as pd
 from ultralytics import YOLO
-
+if "done" not in st.session_state:
+    st.session_state.done = False
 model = YOLO("yolov8n.pt")
 st.set_page_config(page_title="AI Smart Security Monitoring", layout="wide")
 st.title("👮 AI Smart Security Monitoring System")
@@ -18,18 +19,13 @@ st.markdown("""
 4. Click **Start Monitoring**.
 ### Recommended Video
 - Static Camera
-- MP4 Format
 - Landscape Video
-- Clear visibility
 """)
-
 st.sidebar.header("⚙ Detection Settings")
 confidence = st.sidebar.slider("Confidence Threshold", 0.10, 1.00, 0.40, 0.05)
 iou_threshold = st.sidebar.slider("IoU Threshold", 0.1, 1.0, 0.45, 0.05)
 st.sidebar.markdown("---")
-
 uploaded_file = st.file_uploader("📂 Upload CCTV Video", type=["mp4", "avi", "mov"])
-
 if uploaded_file is not None:
     temp = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
     temp.write(uploaded_file.read())
@@ -54,6 +50,7 @@ if uploaded_file is not None:
     start = st.button("🚀 Start Monitoring")
 
     if start:
+        st.session_state.done = False
         cap = cv2.VideoCapture(video_path)
         writer = cv2.VideoWriter("output.mp4", cv2.VideoWriter_fourcc(*"mp4v"), fps, (width, height))
         if not os.path.exists("snapshots"):
@@ -179,7 +176,6 @@ if uploaded_file is not None:
             if total_frames > 0:
                 progress.progress(min(float(frame_no / total_frames), 1.0))
 
-            # Guard clause preventing cv2.cvtColor from crashing on corrupted or empty frames
             if frame is not None and getattr(frame, "size", 0) > 0:
                 try:
                     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -195,36 +191,40 @@ if uploaded_file is not None:
         if len(stay_times) > 0:
             average_time = round(sum(stay_times) / len(stay_times), 2)
 
+        st.session_state.max_people = max_people
+        st.session_state.total_entry = total_entry
+        st.session_state.total_exit = total_exit
+        st.session_state.average_time = average_time
+        st.session_state.inside_count = len(inside)
+        st.session_state.frame_no = frame_no
+        st.session_state.done = True
+
+    if st.session_state.done:
         st.markdown("---")
         st.success("Snapshots are saved inside 📂 snapshots/")
 
         st.subheader("📊 Final Report")
-
         report1, report2, report3 = st.columns(3)
 
         with report1:
-            st.metric("👤 Maximum Occupancy", max_people)
-            st.metric("➡ Total Entries", total_entry)
+            st.metric("👤 Maximum Occupancy", st.session_state.max_people)
+            st.metric("➡ Total Entries", st.session_state.total_entry)
 
         with report2:
-            st.metric("⬅ Total Exits", total_exit)
-            st.metric("⏱ Average Stay", f"{average_time:.2f} sec")
+            st.metric("⬅ Total Exits", st.session_state.total_exit)
+            st.metric("⏱ Average Stay", f"{st.session_state.average_time:.2f} sec")
 
         with report3:
-            st.metric("🚶 Current Inside", len(inside))
-            st.metric("🎞 Total Frames", frame_no)
+            st.metric("🚶 Current Inside", st.session_state.inside_count)
+            st.metric("🎞 Total Frames", st.session_state.frame_no)
 
         st.markdown("---")
-
         st.subheader("🎥 Processed Video")
-
         if os.path.exists("output.mp4"):
             st.video("output.mp4")
 
         st.markdown("---")
-
         st.subheader("📄 Event Log")
-
         try:
             df = pd.read_csv("events.csv")
             st.dataframe(df, use_container_width=True)
@@ -232,7 +232,6 @@ if uploaded_file is not None:
             st.warning("No events recorded.")
 
         st.markdown("---")
-
         download1, download2 = st.columns(2)
 
         with download1:
@@ -246,22 +245,18 @@ if uploaded_file is not None:
                     st.download_button("⬇ Download Event Log", file, "events.csv", "text/csv")
 
         st.markdown("---")
-
         st.subheader("📸 Captured Snapshots")
-
         if os.path.exists("snapshots"):
             images = [os.path.join("snapshots", i) for i in os.listdir("snapshots") if i.endswith(".jpg")]
 
             if len(images) > 0:
                 preview = images[-8:]
-
                 cols = st.columns(4)
 
                 for i, img in enumerate(preview):
                     cols[i % 4].image(img, use_container_width=True)
 
                 snap_zip = tempfile.NamedTemporaryFile(delete=False, suffix=".zip").name
-
                 with zipfile.ZipFile(snap_zip, "w") as zipf:
                     for img in images:
                         zipf.write(img, arcname=os.path.basename(img))
@@ -272,7 +267,5 @@ if uploaded_file is not None:
                 st.info("No snapshots captured.")
 
         st.markdown("---")
-
         st.balloons()
-
         st.success("✅ Smart Security Monitoring Completed Successfully!")
