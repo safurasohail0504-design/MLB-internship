@@ -1,2 +1,2 @@
 libgl1
-ffmpeg
+libglib2.0-0t64
