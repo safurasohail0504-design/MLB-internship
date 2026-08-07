@@ -1,5 +1,5 @@
+opencv-python-headless
 streamlit
-opencv-python
 ultralytics
 pandas
-numpy
+torch
