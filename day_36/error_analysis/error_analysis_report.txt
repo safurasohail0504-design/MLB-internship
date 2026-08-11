@@ -1,0 +1,37 @@
+YOLO MODEL PERFORMANCE AUDIT - ERROR ANALYSIS
+
+Total validation images reviewed: 126
+Representative cases recorded in this report: 30
+
+ERROR CATEGORY COUNTS
+
+Localization Error: 1
+Duplicate Detection: 7
+False Positive: 10
+Missed Object: 1
+Correct Behavior: 10
+
+MAIN FINDINGS
+
+1. Helmet detection performed strongly on most reviewed images.
+2. Cap detection produced several duplicate detections.
+3. Some hair, shirts, chairs, heads and other regions were incorrectly classified as caps.
+4. Small or distant caps, especially in backgrounds, were sometimes missed.
+5. Some images contained multiple people or overlapping objects, making detection more difficult.
+6. The model sometimes produced large or poorly localized bounding boxes.
+
+POSSIBLE IMPROVEMENTS
+
+1. Add more diverse cap and non-cap training examples.
+2. Add hard-negative images containing hair, shirts, chairs and similar background patterns.
+3. Increase the number of small and distant cap examples.
+4. Review duplicate detections and tune confidence/NMS settings during inference.
+5. Improve bounding-box annotations for difficult training images.
+6. Collect more challenging images containing multiple people and overlapping objects.
+
+MODEL METRICS
+
+Precision: 0.9127
+Recall: 0.8168
+mAP@50: 0.8697
+mAP@50-95: 0.6795

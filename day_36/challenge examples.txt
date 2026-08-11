@@ -1,0 +1,34 @@
+Challenge Example 1
+Image: image_010.jpg
+Prediction: Multiple helmet detections on one cap
+Correct Result: One object
+Reason: The model produced duplicate detections on the same object.
+Possible Improvement: Better training data, augmentation and confidence/NMS tuning.
+
+Challenge Example 2
+Image: image_016.jpg
+Prediction: Hair detected as an additional helmet
+Correct Result: Birthday cap only
+Reason: Hair/head shape visually resembles the learned helmet features.
+Possible Improvement: Add more negative examples containing hair and non-helmet head regions.
+
+Challenge Example 3
+Image: image_024.jpg
+Prediction: One helmet + one false detection on shirt
+Correct Result: One helmet
+Reason: Clothing texture was incorrectly associated with the helmet class.
+Possible Improvement: Add hard-negative training examples.
+
+Challenge Example 4
+Image: image_065.jpg
+Prediction: Some background people wearing caps were missed.
+Correct Result: Detect visible caps/helmets.
+Reason: Small/occluded objects in the background are difficult to detect.
+Possible Improvement: More small-object training examples and higher-resolution training.
+
+Challenge Example 5
+Image: image_072.jpg
+Prediction: Person without helmet detected as helmet.
+Correct Result: No helmet.
+Reason: The model learned visual patterns that resemble the helmet class.
+Possible Improvement: Add more negative images and improve class diversity.

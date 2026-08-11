@@ -1,0 +1,30 @@
+Image,Error Category,Class,Observation,Possible Reason
+image_005.jpg,Localization Error,Cap,Bounding box covers almost the entire image,Incorrect localization of the object
+image_007.jpg,Duplicate Detection,Cap,Two boxes are placed on the same cap,Multiple overlapping predictions
+image_010.jpg,Duplicate Detection,Cap,Multiple boxes are placed around one cap,Repeated predictions for the same object
+image_016.jpg,False Positive,Cap,Hair is detected as another cap,Visual similarity between hair and cap
+image_017.jpg,False Positive,Cap,Hair or head region is detected as cap,Model learned visual shortcuts
+image_019.jpg,False Positive,Cap,Non-cap region is detected as cap,Background or appearance confusion
+image_024.jpg,False Positive,Cap,Extra box appears on the shirt,Background confusion
+image_028.jpg,Duplicate Detection,Cap,Two boxes appear on the same object,Duplicate prediction
+image_039.jpg,Duplicate Detection,Cap,Multiple boxes appear around one cap,Duplicate prediction
+image_042.jpg,Duplicate Detection,Cap,Multiple boxes appear around one cap,Duplicate prediction
+image_047.jpg,Duplicate Detection,Cap,Multiple boxes appear around one cap,Duplicate prediction
+image_053.jpg,False Positive,Cap,Chair is detected as cap,Object/background confusion
+image_058.jpg,Duplicate Detection,Cap,Two boxes appear around the same object,Duplicate prediction
+image_060.jpg,False Positive,Cap,Extra detection appears on another body region,Visual similarity
+image_064.jpg,False Positive,Cap,Shirt/body region is detected as cap,Background confusion
+image_065.jpg,Missed Object,Cap,Some background caps are not detected,Small or distant objects
+image_069.jpg,False Positive,Cap,Incorrect region is detected as cap,Visual similarity
+image_072.jpg,False Positive,Cap,Person without helmet or cap is detected,False positive on head region
+image_084.jpg,False Positive,Cap,Person without target object is detected,Visual similarity/background confusion
+image_015.jpg,Correct Behavior,Cap,Cap is detected correctly; bottle and bag are not target classes,Model correctly ignores objects outside the dataset classes
+image_020.jpg,Correct Behavior,Cap,Cap is detected correctly,Good target localization
+image_022.jpg,Correct Behavior,Cap,Target object is detected,Good prediction
+image_029.jpg,Correct Behavior,Cap,Target object is detected,Good prediction
+image_033.jpg,Correct Behavior,Cap,Target object is detected,Good prediction
+image_034.jpg,Correct Behavior,Helmet,Helmet is detected correctly,Good helmet classification
+image_035.jpg,Correct Behavior,Helmet,Helmet is detected correctly,Good prediction
+image_050.jpg,Correct Behavior,Helmet,Helmet is detected correctly,Good prediction
+image_075.jpg,Correct Behavior,Helmet,Helmet is detected correctly,Good prediction
+image_100.jpg,Correct Behavior,Helmet,Helmet is detected correctly,Good prediction

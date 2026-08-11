@@ -1,0 +1,11 @@
+YOLO MODEL EVALUATION RESULTS
+
+Model: YOLO custom model - best.pt
+Dataset: Helmet Detection Dataset
+Validation Images: 126
+Validation Instances: 274
+
+Precision: 0.9127
+Recall: 0.8168
+mAP@50: 0.8697
+mAP@50-95: 0.6795
