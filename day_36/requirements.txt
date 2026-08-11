@@ -1,0 +1,5 @@
+ultralytics
+lapx>=0.5.12
+opencv-python-headless
+pandas
+streamlit
