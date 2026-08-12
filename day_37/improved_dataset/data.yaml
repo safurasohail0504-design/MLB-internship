@@ -1,0 +1,4 @@
+train: train/images
+val: C:/Users/User/Documents/GitHub/day_29/Helmet_Dataset/valid/images
+nc: 2
+names: ['0', '1']
