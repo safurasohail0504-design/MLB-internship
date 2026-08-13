@@ -1,649 +1,473 @@
-# Day 36 – YOLO Model Performance Audit
+Day 37 – YOLO Model Improvement & V1 vs V2 Comparison
 
-## Project Introduction
+Project Introduction
 
-This project focuses on evaluating a trained YOLOv8 computer vision model instead of building a new detection system.
-The purpose of this task is to understand how well the trained model performs, identify its mistakes, analyze difficult predictions, and determine what can be improved in the next version of the model.
-The model was evaluated on a validation dataset containing helmet-related images. The evaluation includes Precision, Recall, mAP@50, mAP@50-95, confusion matrix analysis, prediction review, ground-truth comparison, and manual error analysis.
+This project focuses on improving the previously trained YOLOv8 helmet-detection model and comparing the improved V2 model with the existing V1 model.
 
-# Technologies Used
+The purpose of this task was to train a new model using an improved helmet dataset, evaluate both versions using the same validation dataset, compare their performance, and create a practical interface for testing both models on the same images.
 
-- Python
-- Ultralytics YOLOv8
-- PyTorch
-- OpenCV
-- Pandas
-- NumPy
-- Matplotlib
-- CSV
-- Roboflow Dataset
+The task also included reviewing prediction examples to understand whether the new training approach actually improved the model. The comparison was kept based on the actual evaluation results without artificially favoring V2.
 
-# Folder Structure
+Technologies Used
 
-```text
-Day_36
+Python
+
+Ultralytics YOLOv8
+
+PyTorch
+
+Streamlit
+
+OpenCV
+
+Pandas
+
+NumPy
+
+Matplotlib
+
+CSV
+
+Roboflow Dataset
+
+
+Folder Structure
+
+Day_37
 │
-├── best.pt
-├── data.yaml
-├── README.md
-|
-├── evaluation script
-│   ├── evaluate.py
-│   ├── prediction_review.py
-│   ├── ground_truth_review.py
-│   └── error_analysis.py
+├── models
+│   ├── V1_best.pt
+│   └── V2_best.pt
 │
-├── predictions
-│   ├── ground_truth
-│   └── review
+├── improved_dataset
+│   ├── train
+│   ├── valid
+│   ├── test
+│   └── data.yaml
+│
+├── training code
+│   └── train_v2.py
+│
+├── evaluation
+│   └── compare_models.py
+│
+├── V1 vs V2
+│   ├── Original
+│   ├── V1
+│   └── V2
 │
 ├── results
-│   └── evaluation_results.txt
+│   └── v2_training_correct
+│       ├── weights
+│       │   ├── best.pt
+│       │   └── last.pt
+│       ├── results.csv
+│       ├── results.png
+│       └── training plots
 │
-├── confusion matrix
-│   ├── confusion_matrix.png
-│   └── confusion_matrix_normalized.png
-│
-└── error_analysis
-    ├── error_analysis.csv
-    └── error_analysis_report.txt
-
+├── app.py
+└── README.md
 
 Model and Dataset
-Model Used:
-The trained YOLOv8 model used for evaluation was:
+
+V1 Model
+
+The original trained YOLOv8 model used as the baseline was:
+
+models/V1_best.pt
+
+V1 was used as the baseline model so that the performance of the newly trained V2 model could be measured against an already trained version.
+
+V2 Model
+
+The improved model was trained using:
+
+models/V1_best.pt
+
+as the starting pretrained/custom weights and the improved helmet-detection dataset.
+
+The final V2 model was saved as:
+
+models/V2_best.pt
+
+The V2 training was performed for:
+
+5 epochs
+
+The training was performed on CPU, which resulted in a significantly longer training time.
+
+Dataset Used
+
+The V2 model was trained using the improved helmet-detection dataset.
+
+Training dataset:
+
+2311 images
+
+Validation dataset:
+
+126 images
+274 ground-truth objects
+
+The validation dataset was kept consistent with the evaluation setup so that V1 and V2 could be compared fairly.
+
+The dataset contains two classes:
+
+Class 0 → Cap / Hat
+Class 1 → Helmet
+
+Purpose of V2 Training
+
+The purpose of creating V2 was to investigate whether training the existing model on an improved dataset could produce better detection performance.
+
+The comparison focuses on:
+
+Precision
+
+Recall
+
+mAP@50
+
+mAP@50-95
+
+Detection examples
+
+Confidence scores
+
+Prediction differences
+
+
+The goal was not simply to create another model, but to determine whether the new training process actually improved the existing model.
+
+V2 Training
+
+The V2 model was trained using the improved dataset with:
+
+Epochs: 5
+Batch Size: 8
+Image Size: 640
+Optimizer: AdamW
+
+The training completed successfully.
+
+The final training output produced:
+
 best.pt
+last.pt
+results.csv
+results.png
 
-The model was trained during the previous helmet detection tasks and was selected for evaluation because it represents the custom-trained model rather than the general YOLOv8 pre-trained model.
+The best model was selected for the V1 vs V2 comparison.
 
-Dataset Used:
-The evaluation was performed using the Helmet Detection dataset.
-The validation dataset contained:
-Validation Images: 126
-Ground-Truth Objects: 274
+V1 Performance
 
-The dataset contains two classes.
-The original dataset configuration contains:
-nc: 2
-names: ['0', '1']
-The class labels were inspected manually to understand what each class represents.
-Based on the dataset inspection:
-Class 0 → Cap / Hat
-Class 1 → Helmet
-Purpose of Model Evaluation
-A trained model should not be judged only by whether it produces predictions.
-A professional computer vision workflow also asks:
+The baseline V1 model achieved:
 
-How many predictions are correct?
-How many objects are missed?
-How many false detections occur?
-How confident is the model?
-Which classes perform well?
-Which classes perform poorly?
-Does the model confuse similar objects?
-Does the model detect objects in difficult situations?
-What should be improved in the next training version?
+Metric	V1
 
-This project was created to answer these questions.
-Evaluation Metrics
-The model was evaluated using the following metrics:
+Precision	0.9127
+Recall	0.8168
+mAP@50	0.8697
+mAP@50-95	0.6795
+
+
+These results provided the baseline against which V2 was evaluated.
+
+V2 Performance
+
+The final V2 model achieved:
+
+Metric	V2
+
+Precision	0.8330
+Recall	0.7400
+mAP@50	0.7800
+mAP@50-95	0.5170
+
+
+V1 vs V2 Comparison
+
+The actual validation results were:
+
+Metric	V1	V2
+
+Precision	0.9127	0.8330
+Recall	0.8168	0.7400
+mAP@50	0.8697	0.7800
+mAP@50-95	0.6795	0.5170
+
+
+Based on the current validation results, V1 performs better than V2.
+
+V2 training was successfully completed, but the improved dataset and current training configuration did not produce better overall validation performance than V1.
+
+The results were kept as the actual measured results rather than modifying the comparison to artificially make V2 appear better.
+
+Performance Analysis
+
 Precision
-Recall
-mAP@50
-mAP@50-95
-Confusion Matrix
 
-Precision
+V1 achieved:
 
-Precision measures how many of the objects predicted by the model were actually correct.
-In simple words:
-When the model says an object is a helmet or cap, how often is it correct?
-A high Precision value means the model produces fewer false detections.
-The evaluated Precision was:
-Precision: 0.9127
-This means that the model's detections were generally accurate, although some false detections were still observed during manual review.
+0.9127
+
+while V2 achieved:
+
+0.8330
+
+This means V1 currently produces more accurate detections overall.
+
+The lower V2 precision indicates that V2 still produces more incorrect detections compared with V1.
 
 Recall
 
-Recall measures how many of the actual objects in the dataset were successfully detected by the model.
-In simple words:
-Out of all the real objects present in the image, how many did the model find?
-The evaluated Recall was:
-Recall: 0.8168
-The recall is lower than precision, which indicates that the model still misses some objects.
-This is particularly important in images containing multiple people or objects where some helmets or caps may not be detected.
+V1 achieved:
 
-F1 Score:
+0.8168
 
-F1 Score combines Precision and Recall into a single metric.
-It is useful when both false detections and missed objects are important.
-The formula is:
-F1 = 2 × Precision × Recall / (Precision + Recall)
-Using the evaluated Precision and Recall:
-Precision = 0.9127
-Recall = 0.8168
-The approximate F1 Score is:
-F1 ≈ 0.862
-This indicates that the model has a good overall balance between precision and recall.
+while V2 achieved:
 
-IoU
+0.7400
 
-IoU stands for Intersection over Union.
-It measures how much the predicted bounding box overlaps with the correct ground-truth bounding box.
-IoU = Area of Intersection / Area of Union
-A higher IoU means the predicted bounding box is closer to the correct location.
-IoU is important because a detection can have the correct class but still have a poorly positioned bounding box.
+V1 therefore detects a larger proportion of the actual objects in the validation dataset.
+
+The lower V2 recall indicates that some objects are still being missed.
 
 mAP@50
 
-mAP@50 means mean Average Precision at IoU threshold 0.50.
-The prediction is considered correct when the predicted bounding box has sufficient overlap with the ground-truth box at an IoU threshold of 0.50.
-The evaluated result was:
-mAP@50: 0.8697
-This indicates strong detection performance at the IoU 0.50 threshold.
+V1:
+
+0.8697
+
+V2:
+
+0.7800
+
+V1 currently provides stronger detection performance at the IoU 0.50 threshold.
 
 mAP@50-95
 
-mAP@50-95 is a stricter evaluation metric.
-Instead of using only IoU 0.50, it evaluates multiple IoU thresholds from:
-0.50
-0.55
-0.60
-...
-0.95
-The evaluated result was:
-mAP@50-95: 0.6795
+V1:
 
-The lower mAP@50-95 compared with mAP@50 indicates that some bounding boxes are not extremely precise even when the model successfully detects the correct object.
+0.6795
 
-This metric is therefore useful for identifying localization problems.
+V2:
 
-Overall Model Performance
+0.5170
 
-The final evaluation results were:
+The lower V2 mAP@50-95 indicates that V2 currently has weaker overall localization quality across stricter IoU thresholds.
 
-Precision: 0.9127
-Recall: 0.8168
-mAP@50: 0.8697
-mAP@50-95: 0.6795
+This metric is particularly useful because it evaluates not only whether an object was detected, but also how accurately its bounding box is positioned.
 
-The validation dataset contained:
+V2 Training Progress
 
-Images: 126
-Objects: 274
+During V2 training, the validation performance changed across epochs.
 
-The model produced strong overall detection results, especially in Precision and mAP@50.
+The results showed improvement during training, with the strongest final recorded V2 result reaching:
 
-However, manual inspection showed several difficult cases that are not fully represented by the overall metrics.
+Precision: 0.833
+Recall: 0.740
+mAP@50: 0.780
+mAP@50-95: 0.517
 
-Class Performance
+Although V2 improved during its own training process, it still did not surpass the V1 baseline.
 
-The validation results were:
+V1 vs V2 Prediction Review
 
-Class 0:
-Precision: 0.886
-Recall: 0.789
-mAP@50: 0.840
-mAP@50-95: 0.554
+A comparison structure was created:
 
-Class 1:
-Precision: 0.939
-Recall: 0.845
-mAP@50: 0.899
-mAP@50-95: 0.805
+V1 vs V2
+│
+├── Original
+├── V1
+└── V2
 
-Based on the dataset inspection:
+The purpose of these folders is to visually compare:
 
-Class 0 → Cap / Hat
-Class 1 → Helmet
+Original image
 
-Therefore, the helmet class performed better than the cap/hat class.
+V1 prediction
 
-Best-Performing Class
+V2 prediction
 
-The best-performing class was:
 
-Class 1 – Helmet
+The same images can therefore be inspected across both model versions.
 
-Its results were:
+The comparison helps identify differences that cannot always be understood from numerical metrics alone.
 
-Precision: 0.939
-Recall: 0.845
-mAP@50: 0.899
-mAP@50-95: 0.805
+Streamlit Application
 
-The helmet class achieved strong precision, recall, and localization performance.
+A Streamlit application was developed to provide a practical V1 vs V2 model comparison interface.
 
-Worst-Performing Class
+The application allows the user to:
 
-The weaker class was:
+Upload an image
 
-Class 0 – Cap / Hat
+Run V1 detection
 
-Its results were:
+Run V2 detection
 
-Precision: 0.886
-Recall: 0.789
-mAP@50: 0.840
-mAP@50-95: 0.554
+Adjust the confidence threshold
 
-The particularly lower mAP@50-95 suggests that some cap/hat bounding boxes are not localized very precisely.
+Adjust image size
 
-Confusion Matrix
+View V1 predictions
 
-The project generated two confusion matrix files:
+View V2 predictions
 
-confusion_matrix/confusion_matrix.png
-confusion_matrix/confusion_matrix_normalized.png
+Compare detection counts
 
-The confusion matrix helps identify:
+Inspect prediction confidence
 
-Correct classifications
-Incorrect classifications
-Background false positives
-Class confusion
-Which classes are easier or harder for the model
 
-The normalized confusion matrix is useful for comparing class performance using proportions rather than raw counts.
+The application uses:
 
-Prediction Review
+models/V1_best.pt
+models/V2_best.pt
 
-A manual prediction review was performed on the validation dataset.
+for model comparison.
 
-The model processed:
+Model Comparison
 
-126 validation images
+The application compares both models using the same uploaded image.
 
-Prediction images were saved inside:
+For each model, the application displays:
 
-predictions/review/
+Detection Count
+Predicted Classes
+Confidence Scores
+Bounding Boxes
 
-The images were renamed into a simpler format:
+This allows direct visual comparison between the two model versions.
 
-image_001.jpg
-image_002.jpg
-image_003.jpg
-...
-image_126.jpg
+Current Findings
 
-This made manual error analysis easier.
+The current results show that:
 
-Ground Truth Review
+V1 > V2
 
-Ground-truth visualizations were saved inside:
+for the main validation metrics.
 
-predictions/ground_truth/
+V1 currently has:
 
-These images were compared with the prediction results to determine whether the model:
+Higher Precision
 
-Detected the correct object
-Missed an object
-Detected an incorrect object
-Used the wrong class
-Produced duplicate detections
-Produced an incorrectly sized bounding box
-Error Analysis
+Higher Recall
 
-Manual inspection was performed to identify incorrect and difficult predictions.
+Higher mAP@50
 
-The main error categories were:
+Higher mAP@50-95
 
-Missed Object
-Wrong Class
-False Detection
-Low Confidence
-Small Object
-Occlusion
-Duplicate Detection
-Poor Localization
 
-The error analysis was stored in:
+Therefore, V2 cannot currently be considered an improvement over V1 based on the validation results.
 
-error_analysis/error_analysis.csv
+V2 Limitations
 
-A written explanation was also created:
+The current V2 model still has several areas that require improvement:
 
-error_analysis/error_analysis_report.txt
-Major Errors Observed
-1. False Detection
+Lower precision than V1
 
-In some images, the model detected objects as caps or helmets even though no helmet or cap was present.
+Lower recall than V1
 
-For example, some people without helmets were detected with predictions such as:
+Lower mAP@50
 
-Class 1 – 0.85 confidence
+Lower mAP@50-95
 
-This indicates that the model sometimes interprets the shape of a person's head or another object as a helmet.
+Possible false detections
 
-2. Duplicate Detection
+Missed objects
 
-Some images contained two or more bounding boxes around the same cap or helmet.
+Localization errors
 
-This creates duplicate detections for one real object.
+Difficulty with visually similar objects
 
-Possible causes include:
+Sensitivity to difficult image conditions
 
-Similar visual features
-Detection confidence threshold
-Object overlap
-NMS behavior
-Difficult object boundaries
-3. Large False Bounding Box
 
-In some images, the model produced a bounding box that covered almost the entire image instead of only the cap or helmet.
+Possible Improvements
 
-This is a serious localization error.
+Based on the current comparison, future V2 improvements could include:
 
-Possible causes include:
+1. Dataset Quality
 
-Incorrect learned features
-Difficult image composition
-Training examples with inconsistent bounding boxes
-Similar background patterns
-Poor localization during training
-4. Hair Detected as Cap
+Review training annotations and ensure bounding boxes accurately cover the target objects.
 
-In some images, the model detected a person's hair as another cap.
+2. Hard Negative Examples
 
-This indicates that the model may have learned visual patterns that are not specific enough to identify the actual cap.
+Add images containing people without helmets or caps and visually similar background objects.
 
-The model may associate:
+This can help reduce false detections.
 
-head shape + dark region + hair
+3. Dataset Diversity
 
-with the cap class.
+Increase variation in:
 
-5. Background Objects Detected
+Lighting
 
-Some objects such as shirts, chairs, or other regions were incorrectly detected as caps or helmets.
-
-This represents a false positive.
-
-The model may be relying on visual shapes instead of learning the complete features of the target object.
-
-6. Missed Objects
-
-Some images contained multiple people wearing caps or helmets, but the model detected only some of them.
-
-This is a recall problem.
-
-Possible reasons include:
-
-Small objects
-Objects far from the camera
-Occlusion
-Overlapping people
-Low image quality
-Similar background colors
-7. Small and Distant Objects
-
-Small caps or helmets in the background were harder to detect.
-
-When the object occupies only a small number of pixels, the model receives less visual information.
-
-This can reduce both classification and localization accuracy.
-
-8. Occlusion
-
-When one person's head or helmet overlaps with another person, the model may:
-
-Miss one object
-Detect only one object
-Produce duplicate boxes
-Produce incorrect bounding boxes
-
-Occlusion is therefore an important difficult case for this model.
-
-Difficult Examples
-
-Five difficult examples were selected for detailed analysis.
-
-Difficult Example 1 – Duplicate Detection
-Observation
-
-One cap received multiple bounding boxes.
-
-Expected Result
-
-Only one bounding box should cover the cap.
-
-Model Behavior
-
-The model detected the same cap more than once.
-
-Possible Reason
-
-The visual features of the cap may have produced multiple overlapping candidate detections.
-
-Possible Improvement
-
-Improve training examples containing similar caps and tune the confidence and IoU/NMS thresholds.
-
-Difficult Example 2 – Hair Detected as Cap
-Observation
-
-The model detected both the birthday cap and a person's hair.
-
-Expected Result
-
-Only the actual cap should be detected.
-
-Model Behavior
-
-Two detections were generated.
-
-Possible Reason
-
-The model may have learned that certain head or hair shapes resemble the cap class.
-
-Possible Improvement
-
-Add hard-negative training images containing people with similar hairstyles but no caps.
-
-Difficult Example 3 – Person Without Helmet Detected
-Observation
-
-A person without a helmet received a helmet prediction with high confidence.
-
-Expected Result
-
-No helmet detection should be produced.
-
-Model Behavior
-
-The model classified a person's head as a helmet.
-
-Possible Reason
-
-The model has learned features that are too general and may associate head shapes with helmets.
-
-Possible Improvement
-
-Add more negative examples containing people without helmets and improve class diversity.
-
-Difficult Example 4 – Multiple People Wearing Caps
-Observation
-
-Several people were visible in the background wearing caps, but some were not detected.
-
-Expected Result
-
-Each visible cap should be detected.
-
-Model Behavior
-
-Only some caps were detected.
-
-Possible Reason
-
-The objects were small, distant, or partially occluded.
-
-Possible Improvement
-
-Add more small-object and crowded-scene training examples and increase the effective training image size if computationally possible.
-
-Difficult Example 5 – Incorrect Large Bounding Box
-Observation
-
-The model produced a bounding box much larger than the actual target.
-
-Expected Result
-
-The bounding box should tightly cover only the cap or helmet.
-
-Model Behavior
-
-The predicted bounding box covered a large part of the image.
-
-Possible Reason
-
-The model had difficulty localizing the target and may have learned incorrect visual patterns from the training data.
-
-Possible Improvement
-
-Review and correct training annotations and add more examples with accurately labeled bounding boxes.
-
-Error Analysis Summary
-
-The major observed problems were:
-
-Error Type	Observation
-False Detection	Non-helmet/head/background regions detected
-Duplicate Detection	Multiple boxes around one object
-Poor Localization	Bounding boxes larger than target
-Missed Object	Some visible objects not detected
-Small Object	Distant objects frequently missed
-Occlusion	Overlapping objects difficult to detect
-Wrong Detection	Hair, shirt, chair or other regions detected
-Low Confidence	Some difficult objects received low confidence
-Why Overall Metrics Are Not Enough
-
-The model has strong numerical evaluation results, but the manual review shows that the model still has important weaknesses.
-
-For example:
-
-Precision = 0.9127
-
-looks strong.
-
-However, manual inspection can reveal specific false detections that are hidden inside the overall metric.
-
-Therefore, professional model evaluation should combine:
-
-Metrics
-+
-Confusion Matrix
-+
-Prediction Visualization
-+
-Manual Error Analysis
-Model Strengths
-
-The model performs well when:
-
-The target object is clearly visible
-The helmet is large enough
-The object is not heavily occluded
-The image has good quality
-The target has a clear shape
-The object is separated from the background
-
-The helmet class showed particularly strong performance.
-
-Model Weaknesses
-
-The main weaknesses include:
-
-False helmet detections
-Hair being detected as a helmet
-Background objects being detected
-Duplicate detections
-Large bounding boxes
-Missed small objects
-Difficulty with crowded scenes
-Difficulty with occlusion
-Confusion caused by visually similar objects
-Proposed Improvements
-
-Based on the error analysis, the following improvements are recommended.
-
-1. Improve Dataset Quality
-
-Review the existing annotations and ensure every bounding box tightly covers the correct object.
-
-Incorrect labels can teach the model incorrect visual patterns.
-
-2. Add Hard Negative Examples
-
-Add images containing:
-
-People without helmets
-People with normal hair
-People wearing hats
-Chairs
-Bags
-Shirts
-Background objects
-
-These examples can help reduce false positives.
-
-3. Increase Dataset Diversity
-
-Include different:
-
-Lighting conditions
 Camera angles
-Helmet types
-Cap styles
+
+Object sizes
+
 Backgrounds
+
 Person poses
-Distances
+
+Helmet types
+
 Crowded scenes
-4. Add Small Objects
 
-More examples of small and distant helmets/caps should be included.
 
-This can improve recall for difficult scenes.
+4. Small Object Examples
 
-5. Add Occlusion Examples
+Include more examples containing small and distant helmets or caps to improve recall.
 
-Training should include images where:
+5. Occlusion Examples
 
-People overlap
-Helmets are partially hidden
-Multiple people are close together
-6. Tune Confidence Threshold
+Add examples where helmets or caps are partially hidden or where multiple people overlap.
 
-The confidence threshold can be adjusted to reduce false detections.
+6. Training Configuration
 
-A higher threshold may reduce false positives but can also reduce recall.
+Experiment with:
 
-Therefore, threshold tuning should be evaluated carefully.
+More training epochs
 
-7. Tune NMS / IoU Settings
+Learning rate
 
-Duplicate detections can sometimes be reduced by adjusting IoU/NMS-related settings.
+Batch size
 
-However, this should be tested using validation results rather than changed blindly.
+Augmentation
 
-8. Retrain the Model
+Image size
 
-After correcting annotations and adding difficult examples, the model should be retrained and evaluated again.
+Confidence threshold
 
-The goal should be to improve:
+NMS/IoU settings
 
-Recall
-mAP@50-95
-False Positive Rate
-Localization Quality
+
+Any change should be validated against the same validation dataset.
+
+Blockers
+
+The main blocker during this task was the training time.
+
+The V2 model was trained on CPU, making each epoch relatively time-consuming. The 5-epoch training run took approximately:
+
+3.68 hours
+
+Another challenge was that an earlier V2 training checkpoint was not a complete resumable Ultralytics checkpoint, which prevented direct continuation from the previous epoch.
+
+Additional time was spent configuring the V1 vs V2 prediction folders and ensuring that the Streamlit application could correctly access the comparison images.
+
 Final Evaluation
 
-The final model evaluation was:
+The final measured results were:
 
-Precision: 0.9127
-Recall: 0.8168
-mAP@50: 0.8697
-mAP@50-95: 0.6795
+Metric	V1	V2
 
-Overall, the model demonstrates good detection performance, particularly for the helmet class.
-However, manual prediction analysis identified several areas for improvement, including false detections, duplicate detections, poor localization, missed small objects, and incorrect detections of visually similar background regions.
+Precision	0.9127	0.8330
+Recall	0.8168	0.7400
+mAP@50	0.8697	0.7800
+mAP@50-95	0.6795	0.5170
+
+The V2 training pipeline, evaluation process, comparison structure, and Streamlit application were completed successfully.
+However, the current results show that V2 has not yet surpassed V1. The comparison provides a measurable baseline for further experimentation and model improvement rather than assuming that the newer model is automatically better.
