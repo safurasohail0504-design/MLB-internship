@@ -1,176 +1,151 @@
+import os
+import tempfile
+
 import streamlit as st
 from ultralytics import YOLO
-from PIL import Image
-import tempfile
-import os
-import cv2
 
-st.set_page_config(page_title="Shoe Detection AI", page_icon="👟", layout="wide")
+st.set_page_config(
+    page_title="Shoe Detection AI",
+    page_icon="👟",
+    layout="centered"
+)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "best.pt")
+MODEL_PATH = os.path.join(BASE_DIR, "best.pt")
 
-model = YOLO(MODEL_PATH)
+@st.cache_resource
+def load_model():
+    if not os.path.exists(MODEL_PATH):
+        return None
 
-st.title("👟 Shoe Detection AI")
-st.write("Custom YOLO model trained to detect shoes in images and videos.")
+    return YOLO(MODEL_PATH)
 
-confidence = st.slider("Confidence Threshold", 0.10, 0.90, 0.25, 0.05)
 
-input_type = st.radio("Choose Input", ["Image", "Video"], horizontal=True)
+model = load_model()
 
-if input_type == "Image":
 
-    uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+if model is None:
+    st.error("❌ YOLO model not found.")
 
-    if uploaded_file is not None:
+    st.write("Streamlit is looking for:")
 
-        image = Image.open(uploaded_file).convert("RGB")
+    st.code(MODEL_PATH)
 
-        results = model.predict(
-            image,
-            conf=confidence,
-            imgsz=512,
-            verbose=False
-        )
-
-        result = results[0]
-        output_image = result.plot()
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.subheader("Original Image")
-            st.image(image, use_container_width=True)
-
-        with col2:
-            st.subheader("Detection Result")
-            st.image(output_image, channels="BGR", use_container_width=True)
-
-        detections = len(result.boxes)
-
-        st.subheader("Detection Statistics")
-
-        c1, c2, c3 = st.columns(3)
-
-        c1.metric("Shoes Detected", detections)
-
-        if detections > 0:
-            confidences = result.boxes.conf.cpu().numpy()
-            average_confidence = float(confidences.mean())
-            highest_confidence = float(confidences.max())
-        else:
-            average_confidence = 0
-            highest_confidence = 0
-
-        c2.metric("Average Confidence", f"{average_confidence:.2f}")
-        c3.metric("Highest Confidence", f"{highest_confidence:.2f}")
-
-        if detections > 0:
-            st.success(f"{detections} shoe(s) detected.")
-        else:
-            st.warning("No shoes detected at the selected confidence threshold.")
-
-        success, buffer = cv2.imencode(".jpg", output_image)
-
-        if success:
-            st.download_button(
-                "Download Prediction",
-                data=buffer.tobytes(),
-                file_name="shoe_prediction.jpg",
-                mime="image/jpeg"
-            )
-
-else:
-
-    uploaded_video = st.file_uploader(
-        "Upload a short video",
-        type=["mp4", "avi", "mov", "mkv"]
+    st.info(
+        "Make sure best.pt is committed inside the day_39 folder."
     )
 
-    if uploaded_video is not None:
+    st.stop()
 
-        temp_input = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
-        temp_input.write(uploaded_video.read())
-        temp_input.close()
+st.title("👟 Shoe Detection AI")
 
-        output_path = os.path.join(
-            tempfile.gettempdir(),
-            "shoe_detection_output.mp4"
-        )
+st.write(
+    "Upload an image and the custom YOLO model "
+    "will detect shoes."
+)
 
-        cap = cv2.VideoCapture(temp_input.name)
+st.success("✅ YOLO model loaded successfully!")
 
-        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fps = cap.get(cv2.CAP_PROP_FPS)
+uploaded_file = st.file_uploader(
+    "📤 Upload an image",
+    type=["jpg", "jpeg", "png"]
+)
 
-        if fps <= 0:
-            fps = 25
 
-        fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-        writer = cv2.VideoWriter(
-            output_path,
-            fourcc,
-            fps,
-            (width, height)
-        )
+if uploaded_file is not None:====
 
-        total_frames = 0
-        frames_with_detections = 0
-        total_detections = 0
+    st.subheader("📷 Uploaded Image")
 
-        progress = st.progress(0)
+    st.image(
+        uploaded_file,
+        caption="Original Image",
+        use_container_width=True
+    )
 
-        while True:
+    if st.button("🔍 Detect Shoes", type="primary"):
 
-            ret, frame = cap.read()
+        with st.spinner("Detecting shoes..."):
 
-            if not ret:
-                break
+            try:
+                # Save uploaded image temporarily
+                with tempfile.NamedTemporaryFile(
+                    delete=False,
+                    suffix=".jpg"
+                ) as temp_file:
 
-            results = model.predict(
-                frame,
-                conf=confidence,
-                imgsz=512,
-                verbose=False
-            )
+                    temp_file.write(uploaded_file.getbuffer())
+                    temp_path = temp_file.name
 
-            result = results[0]
+                # Run YOLO
+                results = model.predict(
+                    source=temp_path,
+                    conf=0.25,
+                    verbose=False
+                )
 
-            detections = len(result.boxes)
+                # Get first result
+                result = results[0]
 
-            total_frames += 1
-            total_detections += detections
+                # Create annotated image
+                annotated_image = result.plot()
 
-            if detections > 0:
-                frames_with_detections += 1
+                # Display result
+                st.subheader("🎯 Detection Result")
 
-            output_frame = result.plot()
+                st.image(
+                    annotated_image,
+                    caption="Detected Shoes",
+                    use_container_width=True
+                )
 
-            writer.write(output_frame)
+                # ==================================
+                # DETECTION DETAILS
+                # ==================================
 
-            if total_frames % 5 == 0:
-                progress.progress(min((total_frames % 100) / 100, 1.0))
+                boxes = result.boxes
 
-        cap.release()
-        writer.release()
+                if boxes is not None and len(boxes) > 0:
 
-        progress.progress(1.0)
+                    st.subheader("📊 Detection Details")
 
-        st.success("Video processing completed.")
+                    total_detections = len(boxes)
 
-        col1, col2, col3 = st.columns(3)
+                    st.write(
+                        f"**Total detections:** {total_detections}"
+                    )
 
-        col1.metric("Frames Processed", total_frames)
-        col2.metric("Total Detections", total_detections)
-        col3.metric("Frames With Shoes", frames_with_detections)
+                    for i, box in enumerate(boxes):
 
-        with open(output_path, "rb") as video_file:
-            st.download_button(
-                "Download Processed Video",
-                data=video_file.read(),
-                file_name="shoe_detection_output.mp4",
-                mime="video/mp4"
-            )
-        os.unlink(temp_input.name)
+                        class_id = int(
+                            box.cls[0].item()
+                        )
+
+                        confidence = float(
+                            box.conf[0].item()
+                        )
+
+                        class_name = model.names[class_id]
+
+                        st.write(
+                            f"**{i + 1}. {class_name}** "
+                            f"— Confidence: "
+                            f"{confidence:.2%}"
+                        )
+
+                else:
+
+                    st.warning(
+                        "⚠️ No shoes were detected "
+                        "in this image."
+                    )
+
+                # Delete temporary file
+                os.remove(temp_path)
+
+            except Exception as e:
+
+                st.error(
+                    "❌ An error occurred during detection."
+                )
+
+                st.exception(e)
