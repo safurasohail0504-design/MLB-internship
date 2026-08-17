@@ -20,7 +20,6 @@ def load_model():
 
     return YOLO(MODEL_PATH)
 
-
 model = load_model()
 
 
@@ -52,7 +51,7 @@ uploaded_file = st.file_uploader(
 )
 
 
-if uploaded_file is not None:====
+if uploaded_file is not None:
 
     st.subheader("📷 Uploaded Image")
 
@@ -97,10 +96,6 @@ if uploaded_file is not None:====
                     caption="Detected Shoes",
                     use_container_width=True
                 )
-
-                # ==================================
-                # DETECTION DETAILS
-                # ==================================
 
                 boxes = result.boxes
 
@@ -147,5 +142,4 @@ if uploaded_file is not None:====
                 st.error(
                     "❌ An error occurred during detection."
                 )
-
                 st.exception(e)
