@@ -1,0 +1,13 @@
+{
+  "job_id": "7c012c06-2625-47cc-b9f5-8fcd0a5b5a41",
+  "status": "completed",
+  "progress": 100,
+  "stats": {
+    "total_frames": 241,
+    "processed_frames": 241,
+    "total_detections": 973,
+    "average_fps": 2.89,
+    "processing_time_seconds": 83.36
+  },
+  "error": null
+}
