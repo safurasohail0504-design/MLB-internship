@@ -1,24 +1,20 @@
-from ultralytics import YOLO
-from pathlib import Path
 import cv2
 import time
 
-
-# Load custom YOLO model
-MODEL_PATH = Path(__file__).resolve().parents[2] / "models" / "best.pt"
-
-model = YOLO(str(MODEL_PATH))
+from app.services.detector import model
 
 
 def process_video(input_path, output_path, job_id, jobs):
 
     start_time = time.time()
 
+    # Open input video
     cap = cv2.VideoCapture(input_path)
 
     if not cap.isOpened():
         raise ValueError("Could not open video.")
 
+    # Get video information
     fps = cap.get(cv2.CAP_PROP_FPS)
 
     if fps <= 0:
@@ -28,10 +24,15 @@ def process_video(input_path, output_path, job_id, jobs):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
+    if width <= 0 or height <= 0:
+        cap.release()
+        raise ValueError("Invalid video dimensions.")
+
     if total_frames <= 0:
         cap.release()
         raise ValueError("Video contains no frames.")
 
+    # Create output video
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
 
     out = cv2.VideoWriter(
@@ -57,7 +58,7 @@ def process_video(input_path, output_path, job_id, jobs):
             if not success:
                 break
 
-            # YOLO inference
+            # Run YOLO on current frame
             results = model(
                 frame,
                 conf=0.25,
@@ -66,6 +67,7 @@ def process_video(input_path, output_path, job_id, jobs):
 
             frame_detections = 0
 
+            # Process YOLO results
             for result in results:
 
                 for box in result.boxes:
@@ -81,7 +83,7 @@ def process_video(input_path, output_path, job_id, jobs):
                         box.xyxy[0].tolist()
                     )
 
-                    # Bounding box
+                    # Draw bounding box
                     cv2.rectangle(
                         frame,
                         (x1, y1),
@@ -90,7 +92,7 @@ def process_video(input_path, output_path, job_id, jobs):
                         2
                     )
 
-                    # Label
+                    # Detection label
                     label = f"{class_name} {confidence:.2f}"
 
                     cv2.putText(
@@ -105,10 +107,11 @@ def process_video(input_path, output_path, job_id, jobs):
 
                     frame_detections += 1
 
+            # Update counters
             processed_frames += 1
             total_detections += frame_detections
 
-            # Frame information
+            # Display frame progress
             cv2.putText(
                 frame,
                 f"Frame: {processed_frames}/{total_frames}",
@@ -119,10 +122,10 @@ def process_video(input_path, output_path, job_id, jobs):
                 2
             )
 
-            # Save frame
+            # Save processed frame
             out.write(frame)
 
-            # Update progress
+            # Update job progress
             jobs[job_id]["progress"] = int(
                 (processed_frames / total_frames) * 100
             )
@@ -132,6 +135,7 @@ def process_video(input_path, output_path, job_id, jobs):
         cap.release()
         out.release()
 
+    # Calculate processing statistics
     processing_time = time.time() - start_time
 
     average_fps = (
