@@ -1,0 +1,37 @@
+2026-08-21 12:48:16,670 - INFO - [req_ec1de802] Video upload received: requirements.txt
+2026-08-21 12:48:16,670 - WARNING - [req_ec1de802] Unsupported file type: requirements.txt
+2026-08-21 12:52:09,880 - INFO - [req_ea892f5f] Video upload received: 8346818-uhd_4096_2160_25fps.mp4
+2026-08-21 12:52:09,930 - INFO - [req_ea892f5f] File saved: uploads\ea892f5f-43dd-4902-aad2-49ed05d8efc3_8346818-uhd_4096_2160_25fps.mp4
+2026-08-21 12:52:09,935 - INFO - [req_ea892f5f] Job queued for processing
+2026-08-21 12:52:09,935 - INFO - [ea892f5f-43dd-4902-aad2-49ed05d8efc3] Processing started
+2026-08-21 12:53:02,558 - INFO - [req_ea892f5f] Status check - processing
+2026-08-21 12:53:25,447 - WARNING - [req_inea892f] Job not found: inea892f5f-43dd-4902
+2026-08-21 12:53:43,927 - INFO - [ea892f5f-43dd-4902-aad2-49ed05d8efc3] Processing completed. Detections: 601
+2026-08-21 12:54:16,964 - INFO - [req_ea892f5f] Status check - completed
+2026-08-21 12:55:37,853 - INFO - [req_ea892f5f] Status check - completed
+2026-08-21 12:56:03,949 - INFO - [req_c8a66068] Video upload received: 8938127-uhd_3840_2160_25fps.mp4
+2026-08-21 12:56:04,083 - INFO - [req_c8a66068] File saved: uploads\c8a66068-30f8-4c57-8374-cdbb2e4248bd_8938127-uhd_3840_2160_25fps.mp4
+2026-08-21 12:56:04,086 - INFO - [req_c8a66068] Job queued for processing
+2026-08-21 12:56:04,093 - INFO - [c8a66068-30f8-4c57-8374-cdbb2e4248bd] Processing started
+2026-08-21 12:56:21,822 - INFO - [req_c8a66068] Status check - processing
+2026-08-21 12:56:57,407 - WARNING - [req_c8a66068] Job not completed. Status: processing
+2026-08-21 12:57:45,148 - INFO - [c8a66068-30f8-4c57-8374-cdbb2e4248bd] Processing completed. Detections: 989
+2026-08-21 12:58:00,257 - INFO - [req_17c54c37] Video upload received: 8938127-uhd_3840_2160_25fps.mp4
+2026-08-21 12:58:00,419 - INFO - [req_17c54c37] File saved: uploads\17c54c37-4af9-459a-83f2-b13d421e5bef_8938127-uhd_3840_2160_25fps.mp4
+2026-08-21 12:58:00,419 - INFO - [req_17c54c37] Job queued for processing
+2026-08-21 12:58:00,427 - INFO - [17c54c37-4af9-459a-83f2-b13d421e5bef] Processing started
+2026-08-21 12:59:40,488 - INFO - [17c54c37-4af9-459a-83f2-b13d421e5bef] Processing completed. Detections: 989
+2026-08-21 13:06:19,122 - INFO - [req_8bf470db] Video upload received: day_11.mp4
+2026-08-21 13:06:19,557 - INFO - [req_8bf470db] File saved: uploads\8bf470db-f490-4513-bb3b-020777f6a853_day_11.mp4
+2026-08-21 13:06:19,566 - INFO - [req_8bf470db] Job queued for processing
+2026-08-21 13:06:19,590 - INFO - [8bf470db-f490-4513-bb3b-020777f6a853] Processing started
+2026-08-21 13:07:00,253 - INFO - [req_7196e459] Video upload received: day_39.mp4
+2026-08-21 13:07:01,347 - INFO - [req_7196e459] File saved: uploads\7196e459-24e3-4e4c-88ac-4c83fc4fa289_day_39.mp4
+2026-08-21 13:07:01,349 - INFO - [req_7196e459] Job queued for processing
+2026-08-21 13:07:01,403 - INFO - [7196e459-24e3-4e4c-88ac-4c83fc4fa289] Processing started
+2026-08-21 13:07:56,446 - INFO - [req_80251b70] Video upload received: day_30.mp4
+2026-08-21 13:07:59,022 - INFO - [req_80251b70] File saved: uploads\80251b70-7836-405a-9956-c5daa360524d_day_30.mp4
+2026-08-21 13:07:59,024 - INFO - [req_80251b70] Job queued for processing
+2026-08-21 13:07:59,127 - INFO - [80251b70-7836-405a-9956-c5daa360524d] Processing started
+2026-08-21 13:10:03,379 - INFO - [req_1555fe66] Video upload received: Walima Day.mp4
+2026-08-21 13:10:08,346 - WARNING - [req_1555fe66] Video exceeds 500.0MB limit. Uploaded: 1658.12MB
